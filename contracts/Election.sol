@@ -22,6 +22,10 @@ contract Election {
     */
     uint public candidatesCount;
 
+    event votedEvent (
+        uint indexed _candidateId
+    );
+
     constructor() public
     {
         addCandidate("Andres Manuel Lopez Obrador");
@@ -35,6 +39,8 @@ contract Election {
         candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
     }
 
+
+
     function vote (uint _candidateId) public
     {
         require(!voters[msg.sender]);
@@ -42,5 +48,7 @@ contract Election {
 
         voters[msg.sender] = true;    
         candidates[_candidateId].voteCount++;
+
+        emit votedEvent(_candidateId);
     }
 }
